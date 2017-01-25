@@ -47,7 +47,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         //importamos una imagen a ImageIcon
         miImagen = new ImageIcon(new ImageIcon(nombreImagen).getImage().getScaledInstance(anchoPanel, altoPanel, Image.SCALE_DEFAULT));
         
-        panelAhorcado.setIcon(miImagen);
+       panelAhorcado.setIcon(miImagen);
     }
     
     private void chequeaLetra(String letra){
