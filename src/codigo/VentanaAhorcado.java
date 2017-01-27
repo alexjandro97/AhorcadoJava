@@ -7,6 +7,7 @@ package codigo;
 
 import java.awt.Image;
 import java.net.URL;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -16,7 +17,11 @@ import javax.swing.JButton;
  */
 public class VentanaAhorcado extends javax.swing.JFrame {
 
-    String palabraOculta = "CETYS";
+    String palabraOculta;
+    //1a forma
+    //String[] listaDePalabras = new String[10];
+    //2a forma (recomendable)
+    String[] listaDePalabras;
     
     int contadorFallos = 0;
     
@@ -25,8 +30,47 @@ public class VentanaAhorcado extends javax.swing.JFrame {
      */
     public VentanaAhorcado() {
         initComponents();
+        
+        eligePalabraParaAdivinar();
+        
+        
         //dibuja la imagen del ahoracado sin fallos
         dibujaImagen(0);
+        ponGuiones();
+    }
+    
+    private void eligePalabraParaAdivinar(){
+        //Contenido del array de String 1a forma
+//        listaDePalabras[0] = "CETYS";
+//        listaDePalabras[1] = "PENE";
+//        listaDePalabras[2] = "SUPERCALIFRAGILISTICOESPIALIDOSO";
+//        listaDePalabras[3] = "PROGRAMACION";
+//        listaDePalabras[4] = "STARWARS";
+//        listaDePalabras[5] = "DARTHVADER";
+//        listaDePalabras[6] = "ANAKIN";
+//        listaDePalabras[7] = "PLANETA";
+//        listaDePalabras[8] = "CORUSANT";
+//        listaDePalabras[9] = "GEONOSIS";
+
+          //2a forma array
+          listaDePalabras = new String[] {"CETYS", "PENE","SUPERCALIFRAGILISTICOESPIALIDOSO","PROGRAMACION",
+              "STARWARS","DARTHVADER","ANAKIN","ANAKIN","PLANETA","CORUSANT","GEONOSIS"};
+        
+        Random aleatorio = new Random();
+        //elijo una posicion al azar
+        int posicionElegida = aleatorio.nextInt( listaDePalabras.length);
+        //guarda el valor de una palabra al azar que salga en la pantalla
+        palabraOculta = listaDePalabras[posicionElegida];
+        
+    }
+    private void ponGuiones(){
+        //crea un nuevo string con tanto guiones bajos y espacios en blanco
+        //como letras tenga la palabra oculta.
+        String palabraConGuiones = "";
+        for(int i=0; i < palabraOculta.length();i++){
+        palabraConGuiones = palabraConGuiones + "_ ";
+        }
+        pantalla.setText(palabraConGuiones);
     }
     private void dibujaImagen(int contadorFallos){
         ImageIcon miImagen = null;
@@ -41,6 +85,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
             case 3: nombreImagen = getClass().getResource("/Img/ahorcado_3.png");break;
             case 4: nombreImagen = getClass().getResource("/Img/ahorcado_4.png");break;
             case 5: nombreImagen = getClass().getResource("/Img/ahorcado_5.png");break;
+            case-1: nombreImagen = getClass().getResource("/Img/acertasteTodo.png");break;
             default : nombreImagen = getClass().getResource("/Img/ahorcado_fin.png");
         }
         
@@ -69,7 +114,12 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         {
         contadorFallos++;
         dibujaImagen(contadorFallos); 
-        }       
+        }   
+        
+        if (!pantalla.getText().contains("_")){
+            dibujaImagen(-1);
+        }          
+        
        
     }
     
